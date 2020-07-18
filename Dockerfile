@@ -1,13 +1,20 @@
-FROM tbaltrushaitis/ubuntu-nodejs
+# FROM ubuntu:latest
+FROM node:12
+# USER root 
+RUN echo "$(whoami)"
 
-# RUN apt-get update -y
-# RUN apt-get install git
+WORKDIR /home/app
+# RUN apt-get update
+# RUN apt-get -y install curl gnupg git
+# RUN curl -sL https://deb.nodesource.com/setup_11.x | bash -
+# RUN apt-get -y install nodejs
 
-# RUN git clone https://github.com/inter-neto/vapid.git
+RUN cd / &&\
+ git clone https://github.com/inter-neto/vapid.git &&\
+ cd vapid && npm link
 
-USER root 
-RUN cd /home/node && git clone https://github.com/inter-neto/vapid.git && cd vapid && npm link
-USER node
+COPY init-vapid-dir.sh /home/app 
+RUN chmod +x /home/app/init-vapid-dir.sh
 
-
-ENTRYPOINT /bin/bash
+# ENTRYPOINT /bin/bash
+ENTRYPOINT cd /home/app/site && /home/app/init-vapid-dir.sh && vapid start vapid-site
