@@ -1,13 +1,6 @@
-# FROM ubuntu:latest
 FROM node:12
-# USER root 
-RUN echo "$(whoami)"
 
 WORKDIR /home/app
-# RUN apt-get update
-# RUN apt-get -y install curl gnupg git
-# RUN curl -sL https://deb.nodesource.com/setup_11.x | bash -
-# RUN apt-get -y install nodejs
 
 RUN cd / &&\
  git clone https://github.com/inter-neto/vapid.git &&\
